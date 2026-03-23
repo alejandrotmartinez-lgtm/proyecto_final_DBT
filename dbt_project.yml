@@ -37,17 +37,14 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   proyecto_final:
-    # Configuración de la capa Staging: Materialización estricta en tablas
     staging:
       +materialized: table
-      +schema: staging # Opcional: crea un sub-esquema en Snowflake
+      +schema: staging 
     
-    # Configuración de la capa Transformation (Optativa): Carga total
     transformation:
       +materialized: view
       +schema: transformation
       
-    # Configuración de la capa Business: Carga total
     business:
       +materialized: table
       +schema: business
