@@ -44,7 +44,7 @@ models:
     
     # Configuración de la capa Transformation (Optativa): Carga total
     transformation:
-      +materialized: table
+      +materialized: view
       +schema: transformation
       
     # Configuración de la capa Business: Carga total
