@@ -10,6 +10,7 @@ cleaned_customers as (
         c_nationkey,
         c_phone,
         substring(c_phone, 1, 2) as c_phone_cc,
+        substring(c_phone, 4) as c_phone_ln,
         c_acctbal,
         upper(c_mktsegment) as c_mktsegment,
         coalesce(c_comment, 'Sin comentarios') as customer_comment

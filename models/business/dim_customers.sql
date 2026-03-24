@@ -1,10 +1,6 @@
-{{
-    config(
-        materialized='table'
-    )
-}}
+with 
 
-with customers as (
+customers as (
     select * from {{ ref('int_customers_cleaned') }}
 ),
 
@@ -23,6 +19,7 @@ final as (
         c.c_address as customer_address,
         c.c_phone as customer_phone,
         c.c_phone_cc as phone_country_code,
+        c.c_phone_ln as phone_local_number,
         c.c_acctbal as account_balance,
         c.c_mktsegment as market_segment,
         n.n_name as nation_name,

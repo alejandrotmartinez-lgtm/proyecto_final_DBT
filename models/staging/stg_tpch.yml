@@ -1,6 +1,8 @@
 models:
   - name: stg_tpch__customer
     description: This model provides detailed information about customers, including their unique identifier, name, address, associated nation, contact information, account balance, market segment, and additional comments. It is used to manage and analyze customer data within the TPCH dataset.
+    config:
+      unique_key: C_CUSTKEY
     columns:
       - name: C_CUSTKEY
         description: Unique identifier for each customer.
@@ -36,7 +38,9 @@ models:
         data_tests:
           - not_null
   - name: stg_tpch__lineitem
-    description: This model provides detailed information about line items in orders, including keys for orders, parts, and suppliers, as well as quantities, prices, discounts, taxes, and shipping details. It is used to analyze and manage order line data within the TPCH dataset.
+    description: This model provides detailed information about line items in orders, including keys for orders, parts, and suppliers, as well as quantities, prices, discounts,taxes, and shipping details. It is used to analyze and manage order line data within the TPCH dataset.
+    config: 
+      unique_key: [L_ORDERKEY, L_PARTKEY]
     columns:
       - name: L_ORDERKEY
         description: Identifier for each order.
@@ -104,6 +108,8 @@ models:
           - not_null
   - name: stg_tpch__nation
     description: This model provides information about nations, including their unique identifier, name, associated region, and additional comments. It is used to categorize and analyze data by nation within the TPCH dataset.
+    config: 
+      unique_key: N_NATIONKEY
     columns:
       - name: N_NATIONKEY
         description: Unique identifier for each nation.
@@ -120,58 +126,58 @@ models:
           - not_null
       - name: N_COMMENT
         description: Additional comments about the nation.
+        data_tests:
           - not_null
   - name: stg_tpch__orders
     description: This model provides detailed information about customer orders, including order status, total price, order date, priority, and comments. It is used to manage and analyze order data within the TPCH dataset.
+    config:
+        materialized: incremental
+        unique_key: 'O_ORDERKEY'
     columns:
       - name: O_ORDERKEY
+        description: Unique identifier for each order.
         data_tests:
           - unique
           - not_null
       - name: O_CUSTKEY
+        description: Unique identifier for the customer who placed the order.
         data_tests:
           - not_null
       - name: O_ORDERSTATUS
+        description: Current status of the order.
         data_tests:
           - not_null
+          - accepted_values:
+              arguments:
+                values: ['O', 'F', 'P']
       - name: O_TOTALPRICE
+        description: Total price of the order.
         data_tests:
           - not_null
       - name: O_ORDERDATE
+        description: Date when the order was placed.
         data_tests:
           - not_null
       - name: O_ORDERPRIORITY
+        description: Priority level of the order.
         data_tests:
           - not_null
       - name: O_CLERK
+        description: Identifier for the clerk who processed the order.
         data_tests:
           - not_null
       - name: O_SHIPPRIORITY
+        description: Shipping priority assigned to the order.
         data_tests:
           - not_null
       - name: O_COMMENT
-        data_tests:
-          - not_null
-      - name: o_orderkey
-        description: Unique identifier for each order.
-      - name: o_custkey
-        description: Unique identifier for the customer who placed the order.
-      - name: o_orderstatus
-        description: Current status of the order.
-      - name: o_totalprice
-        description: Total price of the order.
-      - name: o_orderdate
-        description: Date when the order was placed.
-      - name: o_orderpriority
-        description: Priority level of the order.
-      - name: o_clerk
-        description: Identifier for the clerk who processed the order.
-      - name: o_shippriority
-        description: Shipping priority assigned to the order.
-      - name: o_comment
         description: Additional comments about the order.
+        data_tests:
+          - not_null  
   - name: stg_tpch__part
     description: This model provides detailed information about parts, including their unique identifier, name, manufacturer, brand, type, size, container, retail price, and additional comments. It is used to manage and analyze part data within the TPCH dataset.
+    config: 
+      unique_key: P_PARTKEY
     columns:
       - name: P_PARTKEY
         description: Unique identifier for each part.
@@ -196,34 +202,33 @@ models:
         description: Additional comments about the part.
   - name: stg_tpch__partsupp
     description: This model provides information about the parts supplied by suppliers, including the part key, supplier key, available quantity, supply cost, and additional comments. It is used to manage and analyze the supply chain data within the TPCH dataset.
+    config: 
+      unique_key: [PS_PARTKEY, PS_SUPPKEY]
     columns:
       - name: PS_PARTKEY
+        description: Unique identifier for each part.
         data_tests:
           - not_null
       - name: PS_SUPPKEY
+        description: Unique identifier for each supplier.
         data_tests:
           - not_null
       - name: PS_AVAILQTY
+        description: The available quantity of the part supplied.
         data_tests:
           - not_null
       - name: PS_SUPPLYCOST
+        description: The cost to supply the part.
         data_tests:
           - not_null
       - name: PS_COMMENT
+        description: Additional comments about the part supply.
         data_tests:
           - not_null
-      - name: ps_partkey
-        description: Unique identifier for each part.
-      - name: ps_suppkey
-        description: Unique identifier for each supplier.
-      - name: ps_availqty
-        description: The available quantity of the part supplied.
-      - name: ps_supplycost
-        description: The cost to supply the part.
-      - name: ps_comment
-        description: Additional comments about the part supply.
   - name: stg_tpch__region
     description: This model provides information about regions, including their unique identifier, name, and additional comments. It is used to categorize and analyze data by region within the TPCH dataset.
+    config: 
+      unique_key: R_REGIONKEY
     columns:
       - name: R_REGIONKEY
         description: Unique identifier for each region.
@@ -238,6 +243,8 @@ models:
         description: Additional comments about the region.
   - name: stg_tpch__supplier
     description: This model provides detailed information about suppliers, including their unique identifier, name, address, associated nation, contact information, account balance, and additional comments. It is used to manage and analyze supplier data within the TPCH dataset.
+    config: 
+      unique_key: S_SUPPKEY
     columns:
       - name: S_SUPPKEY
         description: Unique identifier for each supplier.
