@@ -4,5 +4,5 @@ packages:
   revision: c4d495b8bb27a1448146dd7c928c56d95003c6f0
 - package: dbt-labs/dbt_utils
   name: dbt_utils
-  version: 1.3.0
-sha1_hash: c765aa5639112fd968542d06d555ead6ff7dcc54
+  version: 1.3.3
+sha1_hash: d4ac0003982de72963982202610ab30db6e273fa
