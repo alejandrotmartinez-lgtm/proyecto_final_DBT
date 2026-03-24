@@ -1,10 +1,6 @@
-{{
-    config(
-        materialized='table'
-    )
-}}
+with 
 
-with customers as (
+customers as (
     select * from {{ ref('int_customers_cleaned') }}
 ),
 

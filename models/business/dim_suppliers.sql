@@ -1,4 +1,6 @@
-with suppliers as (
+with 
+
+suppliers as (
     select * from {{ ref('stg_tpch__supplier') }}
 ),
 
