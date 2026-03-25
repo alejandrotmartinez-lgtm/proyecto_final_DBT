@@ -25,8 +25,4 @@ renamed as (
 
 select * from renamed
 
-{% if is_incremental() %}
-
-  where o_orderdate >= (select max(o_orderdate) from {{ this }})
-
-{% endif %}
+{{ get_incremental_filter('o_orderdate') }}
