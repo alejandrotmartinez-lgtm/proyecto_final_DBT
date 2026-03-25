@@ -23,4 +23,3 @@ renamed as (
 )
 
 select * from renamed
-#CONEXION GITHUB
